@@ -75,9 +75,10 @@ class controller {
         cout<<"Заказы клининговой компании"<<endl<<endl;
         cout<<"1 - Добавить Заказ"<<endl;
         cout<<"2 - Удалить Заказ"<<endl;
-        cout<<"3 - Вывести все Заказы"<<endl;
-        cout<<"4 - Сохранить все Заказы в файл"<<endl;
-        cout<<"5 - Считать все Заказы из файла"<<endl;
+        cout<<"3 - Отредактировать Заказ"<<endl;
+        cout<<"4 - Вывести все Заказы"<<endl;
+        cout<<"5 - Сохранить все Заказы в файл"<<endl;
+        cout<<"6 - Считать все Заказы из файла"<<endl;
         cout<<"0 - Выйти"<<endl;
         cout<<"Ваш выбор: ";
         
@@ -124,23 +125,47 @@ class controller {
             }
             return 2;
         }
-        else if(c=='3'){ // Вывод заказов
+        else if (c=='3'){ // Редактирование заказа
+            cout<<"Введите номер Заказа, который хотите отредактировать"<<endl<<"Если хотите отменить редактирование, то введите 0"<<endl<<"Ваш выбор: ";cin>>k;
+            if (k==0){
+                cout<<endl;
+                return 3;
+            }
+            else if (k>l){
+
+                cout<<"Такого заказа нет"<<endl<<endl;
+                return 3;
+            }
+            else{
+                k--;
+                cout<<"Введите фамилию Клиента: " ;cin>>s;
+                cout<<"Введите имя Клиента: ";cin>>n;
+                cout<<"Введите отчество Клиента: ";cin>>o;
+                cout<<"Введите место заказа Клиента(Вводить через _, а не пробел): ";cin>>m;
+                cout<<"Стоимость заказа: ";cin>>pr;
+                cout<<endl;
+                companies[k]=CleaningCompany.create(s,n,o,m,pr);
+                cout<<"Заказ успешно отредактирован"<<endl<<endl;
+            }
+            return 3;
+        }
+        else if(c=='4'){ // Вывод заказов
             for (i=0;i<l;i++){
                 cout<<"Заказ "<<i+1<<endl;
                 companies[i]->print();
                 cout<<endl;
             }
-            return 3;
+            return 4;
         }
-        else if(c=='4'){ // Сохранение заказов в файл
+        else if(c=='5'){ // Сохранение заказов в файл
             companies[0]->f();
             for (i=0;i<l;i++){
                 companies[i]->fout();
             }
             cout<<"Заказы успешно перенесены в файл"<<endl<<endl;
-            return 4;
+            return 5;
         }
-        else if(c=='5'){ // Считывание заказов из файла
+        else if(c=='6'){ // Считывание заказов из файла
             fstream fin;
             fin.open("cpp.txt", ios::in);
     
@@ -161,7 +186,7 @@ class controller {
                 cout<<"Файл может быть считан только в пустое хранилище"<<endl<<endl;
             }
             fin.close();
-            return 5;
+            return 6;
         }
         else if(c=='0'){ // Выход из консоли
             work=0;
